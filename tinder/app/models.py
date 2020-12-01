@@ -12,7 +12,7 @@ class User(AbstractUser):
 class Startup(models.Model):
     name_of_startup = models.CharField(max_length=20)
     email = models.EmailField()
-    phone = models.IntegerField(max_length=15)
+    phone = models.IntegerField()
     video = models.FileField(upload_to='videos/%Y/%m/%d/')
     desk = models.CharField(max_length=500)      # Или TextField?
     pitch_deck = models.FileField(upload_to='pitch_decks/%Y/%m/%d/')
@@ -26,6 +26,6 @@ class Slide(models.Model):
 
 # Промежуточная таблица отобранных проектов
 class InvestorsChoice(models.Model):
-    startup = models.ForeignKey(Startup, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL)
+    startup = models.ForeignKey(Startup, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     response = models.BooleanField()
